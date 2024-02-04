@@ -52,7 +52,7 @@ namespace AppOwnsData.Controllers
                 {
                     embedParams = pbiEmbedService.GetEmbedParams(new Guid(powerBI.Value.WorkspaceId), new Guid(reportId));
                 }
-                
+
                 return JsonSerializer.Serialize<EmbedParams>(embedParams);
             }
             catch (Exception ex)
@@ -61,5 +61,6 @@ namespace AppOwnsData.Controllers
                 return ex.Message + "\n\n" + ex.StackTrace;
             }
         }
+
     }
 }

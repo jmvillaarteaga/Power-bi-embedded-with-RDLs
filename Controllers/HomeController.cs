@@ -5,7 +5,7 @@
 
 namespace AppOwnsData.Controllers
 {
-    using Infraestructura.Reporting;
+    using AppOwnsData.Models;
     using Microsoft.AspNetCore.Mvc;
     using Microsoft.PowerBI.Api.Models;
     using System.Collections.Generic;
@@ -18,15 +18,18 @@ namespace AppOwnsData.Controllers
             return View();
         }
 
-        
         [HttpGet("{controller}/{action}/{reportId}/{*parameters}")]
-        public IActionResult GetReporteRDL(string reportId, string parameters)
-        {            
-            string[] parameterArray = parameters.Split('/');
+        public IActionResult GetReporteRDL(string reportId, string parameters = "")
+        {
+            string[] parameterArray = parameters?.Split('&') ?? new string[0];
             List<ParametroRDL> parametrosRDL = new List<ParametroRDL>();
             foreach (string parameter in parameterArray)
             {
-                string[] pamArray = parameter.Split(':');
+                if (string.IsNullOrEmpty(parameter))
+                {
+                    continue;
+                }
+                string[] pamArray = parameter.Split('=');
                 parametrosRDL.Add(new ParametroRDL(pamArray[0], pamArray[1]));
             }
 
